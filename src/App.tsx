@@ -9,27 +9,36 @@ import { CategoriesResponse, Category } from "./types"
 
 function App() {
   const url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
+  const [selectedCategory, setSelectedCategory] = useState<Category>({
+    strCategory: "Beef"
+  })
   const [data, setData] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(data)
-
   useEffect(() => {
+    let ignore = false;
     const controller = new AbortController()
     const { signal } = controller;
     setLoading(true);
 
     axios
     .get<CategoriesResponse>(url, {signal})
-    .then(({data}) => setData(data.meals))
-    .finally(() => setLoading(false));
+    .then(({data}) => { if (!ignore) {
+      setData(data.meals)
+    }
+  })
+    .finally(() => {if (!ignore) {
+      setLoading(false)
+     }
+    });
 
-    return () => controller.abort()
+    return () => {ignore = true; 
+      controller.abort()}
 
   }, []);
   return (
 
-    <Grid
+    <Grid fontSize={14}
   templateAreas={`"header header"
                   "nav main"`}
   gridTemplateRows={'60px 1fr'}
@@ -39,7 +48,9 @@ function App() {
     <Header/>
   </GridItem>
   <GridItem p='5' area={'nav'} height="calc(100vh - 60px)">
-    <SideNav categories={data} loading={loading}/>
+    <SideNav
+     categories={data} 
+     loading={loading} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory }/>
   </GridItem>
   <GridItem pl='2' bg='green.300' area={'main'}>
     <MainContent/>
