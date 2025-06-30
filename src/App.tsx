@@ -5,10 +5,11 @@ import MainContent from "./components/MainContent"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Controller } from "react-hook-form"
+import { CategoriesResponse, Category } from "./types"
 
 function App() {
   const url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
 
   console.log(data)
@@ -19,12 +20,12 @@ function App() {
     setLoading(true);
 
     axios
-    .get(url, {signal})
+    .get<CategoriesResponse>(url, {signal})
     .then(({data}) => setData(data.meals))
     .finally(() => setLoading(false));
 
     return () => controller.abort()
-    
+
   }, []);
   return (
 
@@ -37,8 +38,8 @@ function App() {
   <GridItem pl='2' bg='orange.300' area={'header'}>
     <Header/>
   </GridItem>
-  <GridItem pl='2' bg='pink.300' area={'nav'} height="calc(100vh - 60px)">
-    <SideNav/>
+  <GridItem p='5' area={'nav'} height="calc(100vh - 60px)">
+    <SideNav categories={data} loading={loading}/>
   </GridItem>
   <GridItem pl='2' bg='green.300' area={'main'}>
     <MainContent/>
