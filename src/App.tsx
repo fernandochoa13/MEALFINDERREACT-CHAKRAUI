@@ -3,7 +3,7 @@ import Header from "./components/Header"
 import SideNav from "./components/SideNav"
 import MainContent from "./components/MainContent"
 import { useState } from "react"
-import { Category } from "./types"
+import { Category, Meal } from "./types"
 import useHttpData from "./components/hooks/useHttpData"
 
   const url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list"

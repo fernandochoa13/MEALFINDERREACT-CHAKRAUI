@@ -8,7 +8,7 @@ type Props = {
 
 function MealCard({meal}: Props) {
   return (
-    <Card key={meal.idMeal} boxShadow="lg">
+    <Card boxShadow="lg">
   <CardBody>
     <Image
       src={meal.strMealThumb}
