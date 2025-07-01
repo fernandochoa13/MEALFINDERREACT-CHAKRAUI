@@ -30,5 +30,5 @@ const [data, setData] = useState<T[]>([]);
 
   }, []);
 
-  return {loading, data}
+  return {loading, data, setData, setLoading}
 }
