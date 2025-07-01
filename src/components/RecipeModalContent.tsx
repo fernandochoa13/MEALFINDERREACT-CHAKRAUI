@@ -1,4 +1,4 @@
-import { ModalBody, ModalCloseButton, ModalHeader, Image } from "@chakra-ui/react"
+import { ModalBody, ModalCloseButton, ModalHeader, Image, Heading, Text } from "@chakra-ui/react"
 import { MealDetails } from "../types"
 
 type Props = {
@@ -12,6 +12,8 @@ function RecipeModalContent({ data }: Props) {
     <ModalCloseButton />
     <ModalBody>
         <Image alt={data.strMeal} width="100%" borderRadius="lg" src={data.strMealThumb}/>
+        <Heading mt="4" mb="4" size="md">Ingredientes</Heading>
+        <Text whiteSpace="pre-line">{data.strInstructions}</Text>
     </ModalBody>
     
      </>
