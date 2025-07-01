@@ -27,7 +27,7 @@ function App() {
 
   const {loading, data} = useHttpData<Category>(url)
 
-    const {loading: loadingMeal, data: dataMeal, setData: setMeals, setLoading: setLoadingMeal} = useHttpData<Meal>(makeMealUrl(defaultCategory))
+    const {loading: loadingMeal, data: dataMeal, setData: setMeals, setLoading: setLoadingMeal, data: MealDetailData} = useHttpData<Meal>(makeMealUrl(defaultCategory))
 
     const searchApi = (searchForm: SearchForm) => {
       const url = `${baseUrl}search.php?s=${searchForm.search}`;
@@ -74,7 +74,7 @@ function App() {
       <MainContent openRecipe={searchMealDetails} meals={dataMeal} loading={loadingMeal}/>
         </GridItem>
       </Grid>
-      <RecipeModal loading={loadingMealDetails} isOpen={isOpen} onClose={onClose} />
+      <RecipeModal data={MealDetailData} loading={loadingMealDetails} isOpen={isOpen} onClose={onClose} />
     </>
 
 )
