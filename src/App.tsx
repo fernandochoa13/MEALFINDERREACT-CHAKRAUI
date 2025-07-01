@@ -8,15 +8,18 @@ import useHttpData from "./components/hooks/useHttpData"
 import axios from "axios"
 import RecipeModal from "./components/RecipeModal"
 import useFetch from "./components/hooks/useFetch"
+import { LuBookUp } from "react-icons/lu"
 
-  const url = "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
+const baseUrl = "https://www.themealdb.com/api/json/v1/1/"
+
+  const url = `${baseUrl}list.php?c=list`
 
   const defaultCategory = {
     strCategory: "Beef"
   }
 
   const makeMealUrl = (category: Category) => 
-    `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category.strCategory}`
+    `${baseUrl}filter.php?c=${category.strCategory}`
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -28,7 +31,7 @@ function App() {
     const {loading: loadingMeal, data: dataMeal, setData: setMeals, setLoading: setLoadingMeal} = useHttpData<Meal>(makeMealUrl(defaultCategory))
 
     const searchApi = (searchForm: SearchForm) => {
-      const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchForm.search}`;
+      const url = `${baseUrl}search.php?s=${searchForm.search}`;
       setLoadingMeal(true);
       axios.get<{meals: Meal[]}>(url)
       .then(({ data }) => setMeals(data.meals))
@@ -36,8 +39,13 @@ function App() {
 
     }
 
-    const { fetch } = useFetch();
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${}`)
+    const { fetch } = useFetch<Meal>();
+   
+    
+    const searchMealDetails = (meal: Meal) => {
+      onOpen();
+      fetch(`${baseUrl}lookup.php?i=${meal.idMeal}`);
+    }
   return (
 
     <>
@@ -64,7 +72,7 @@ function App() {
        loading={loading} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory }/>
         </GridItem>
         <GridItem p='4' bg='gray.100' area={'main'}>
-      <MainContent openRecipe={onOpen} meals={dataMeal} loading={loadingMeal}/>
+      <MainContent openRecipe={searchMealDetails} meals={dataMeal} loading={loadingMeal}/>
         </GridItem>
       </Grid>
       <RecipeModal isOpen={isOpen} onClose={onClose} />
