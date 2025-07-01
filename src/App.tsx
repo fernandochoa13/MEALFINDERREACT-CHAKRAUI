@@ -3,7 +3,7 @@ import Header from "./components/Header"
 import SideNav from "./components/SideNav"
 import MainContent from "./components/MainContent"
 import { useState } from "react"
-import { Category, Meal, SearchForm } from "./types"
+import { Category, Meal, MealDetails, SearchForm } from "./types"
 import useHttpData from "./components/hooks/useHttpData"
 import axios from "axios"
 import RecipeModal from "./components/RecipeModal"
@@ -39,7 +39,7 @@ function App() {
 
     }
 
-    const { fetch } = useFetch<Meal>();
+    const { fetch } = useFetch<MealDetails>();
    
     
     const searchMealDetails = (meal: Meal) => {
