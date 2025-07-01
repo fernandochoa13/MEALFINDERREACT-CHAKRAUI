@@ -27,7 +27,7 @@ function App() {
 
   const {loading, data} = useHttpData<Category>(url)
 
-    const {loading: loadingMeal, data: dataMeal, setData: setMeals, setLoading: setLoadingMeal, data: MealDetailData} = useHttpData<Meal>(makeMealUrl(defaultCategory))
+    const {loading: loadingMeal, data: dataMeal, setData: setMeals, setLoading: setLoadingMeal} = useHttpData<Meal>(makeMealUrl(defaultCategory))
 
     const searchApi = (searchForm: SearchForm) => {
       const url = `${baseUrl}search.php?s=${searchForm.search}`;
@@ -38,7 +38,7 @@ function App() {
 
     }
 
-    const { fetch, loading: loadingMealDetails } = useFetch<MealDetails>();
+    const { fetch, loading: loadingMealDetails, data: MealDetailData } = useFetch<MealDetails>();
    
     
     const searchMealDetails = (meal: Meal) => {
