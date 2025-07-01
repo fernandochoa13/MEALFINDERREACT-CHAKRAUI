@@ -8,7 +8,6 @@ import useHttpData from "./components/hooks/useHttpData"
 import axios from "axios"
 import RecipeModal from "./components/RecipeModal"
 import useFetch from "./components/hooks/useFetch"
-import { LuBookUp } from "react-icons/lu"
 
 const baseUrl = "https://www.themealdb.com/api/json/v1/1/"
 
@@ -39,7 +38,7 @@ function App() {
 
     }
 
-    const { fetch } = useFetch<MealDetails>();
+    const { fetch, loading: loadingMealDetails } = useFetch<MealDetails>();
    
     
     const searchMealDetails = (meal: Meal) => {
@@ -75,7 +74,7 @@ function App() {
       <MainContent openRecipe={searchMealDetails} meals={dataMeal} loading={loadingMeal}/>
         </GridItem>
       </Grid>
-      <RecipeModal isOpen={isOpen} onClose={onClose} />
+      <RecipeModal loading={loadingMealDetails} isOpen={isOpen} onClose={onClose} />
     </>
 
 )

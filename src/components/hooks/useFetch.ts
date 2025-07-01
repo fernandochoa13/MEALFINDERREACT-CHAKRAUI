@@ -10,7 +10,8 @@ export default <T>() => {
     const fetch = (url: string) => {
         setLoading(true);
         axios.get(url)
-        .then(({data}) => setData(data.meals[0]));
+        .then(({data}) => setData(data.meals[0]))
+        .finally(() => setLoading(false));
     }
     return {loading, data, fetch}
 }
