@@ -37,7 +37,7 @@ function App() {
   bg='white' 
   area={'header'}
   >
-    <Header />
+    <Header onSubmit={x => console.log(x)} />
   </GridItem>
   <GridItem  pos="sticky" top="60px" left="0" p='5' area={'nav'} height="calc(100vh - 60px)" overflowY="auto">
     <SideNav 
